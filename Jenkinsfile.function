@@ -20,8 +20,13 @@ pipeline {
         stage('Build and SonarQube Scan') {
             steps {
                 script {
-                    def sonarParams = my.shared.library.utils.parameters.getSonarParameters(params)
-                    sonarScanPipeline(sonarParams).call()
+                // Call the sonarScanPipeline function with the provided parameters
+                    sonarScanPipeline(
+                        sonarProjectKey: params.SONAR_PROJECT_KEY,
+                        sonarProjectName: params.SONAR_PROJECT_NAME,
+                        sonarHostUrl: params.SONAR_HOST_URL,
+                        sonarToken: params.SONAR_TOKEN
+                    ).call()
                 }
             }
         }
