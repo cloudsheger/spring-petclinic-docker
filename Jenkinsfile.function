@@ -1,7 +1,5 @@
 // Jenkinsfile
-
-@Library 'my-shared-library' // Load your shared library
-@Library 'my-shared-library/utils' // Load the utils library
+@Library('my-shared-library') _
 
 pipeline {
     agent any
