@@ -1,6 +1,7 @@
 // Jenkinsfile
 @Library('my-shared-library') _
-//import sonarScanPipeline // Import the sonarScanPipeline script from the shared library
+import my-shared-library.vars.sonarScanPipeline 
+// Import the sonarScanPipeline script from the shared library
 
 pipeline {
     agent any
