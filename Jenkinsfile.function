@@ -1,12 +1,13 @@
 // Jenkinsfile
 @Library('my-shared-library') _
+//import sonarScanPipeline // Import the sonarScanPipeline script from the shared library
 
 pipeline {
     agent any
     parameters {
-        string(name: 'SONAR_PROJECT_KEY', defaultValue: '', description: 'petclinic')
-        string(name: 'SONAR_PROJECT_NAME', defaultValue: '', description: 'petclinic')
-        string(name: 'SONAR_HOST_URL', defaultValue: '', description: 'http://localhost:9000')
+        string(name: 'SONAR_PROJECT_KEY', defaultValue: 'petclinic', description: 'SonarQube project key')
+        string(name: 'SONAR_PROJECT_NAME', defaultValue: 'petclinic', description: 'SonarQube project name')
+        string(name: 'SONAR_HOST_URL', defaultValue: 'http://localhost:9000', description: 'SonarQube server URL')
         string(name: 'SONAR_TOKEN', defaultValue: '', description: 'SonarQube authentication token')
     }
     stages {
@@ -20,13 +21,13 @@ pipeline {
         stage('Build and SonarQube Scan') {
             steps {
                 script {
-                // Call the sonarScanPipeline function with the provided parameters
+                    // Call the sonarScanPipeline function with the provided parameters
                     sonarScanPipeline(
-                        sonarProjectKey: params.SONAR_PROJECT_KEY,
-                        sonarProjectName: params.SONAR_PROJECT_NAME,
-                        sonarHostUrl: params.SONAR_HOST_URL,
-                        sonarToken: params.SONAR_TOKEN
-                    ).call()
+                        SONAR_PROJECT_KEY: params.SONAR_PROJECT_KEY,
+                        SONAR_PROJECT_NAME: params.SONAR_PROJECT_NAME,
+                        SONAR_HOST_URL: params.SONAR_HOST_URL,
+                        SONAR_TOKEN: params.SONAR_TOKEN
+                    )
                 }
             }
         }
