@@ -1,6 +1,5 @@
 // Jenkinsfile
 @Library('my-shared-library') _
-@Library('my-shared-library/utils') _
 
 pipeline {
     agent any
@@ -20,9 +19,10 @@ pipeline {
         }
         stage('Build and SonarQube Scan') {
             steps {
-              script {
-                sonarScanPipeline(getSonarParameters(params)).call()
-              }
+                script {
+                    def sonarParams = my.shared.library.utils.parameters.getSonarParameters(params)
+                    sonarScanPipeline(sonarParams).call()
+                }
             }
         }
     }
