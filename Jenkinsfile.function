@@ -1,0 +1,24 @@
+// Jenkinsfile
+
+@Library 'your-shared-library' // Load your shared library
+@Library 'your-shared-library/utils' // Load the utils library
+
+pipeline {
+    agent any
+    parameters {
+        string(name: 'SONAR_PROJECT_KEY', defaultValue: '', description: 'SonarQube project key')
+        string(name: 'SONAR_PROJECT_NAME', defaultValue: '', description: 'SonarQube project name')
+        string(name: 'SONAR_HOST_URL', defaultValue: '', description: 'SonarQube server URL')
+        string(name: 'SONAR_TOKEN', defaultValue: '', description: 'SonarQube authentication token')
+    }
+    stages {
+        stage('Checkout') {
+            steps {
+                // Checkout your source code from version control system
+                // For example: git branch: 'main', url: 'https://github.com/your/repo.git'
+                checkout scm
+            }
+        }
+        sonarScanPipeline(getSonarParameters(params)).call()
+    }
+}
