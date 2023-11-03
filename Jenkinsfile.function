@@ -1,5 +1,6 @@
 // Jenkinsfile
 @Library('my-shared-library') _
+@Library('my-shared-library/utils') _
 
 pipeline {
     agent any
