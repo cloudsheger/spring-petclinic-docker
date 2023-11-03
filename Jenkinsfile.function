@@ -17,6 +17,12 @@ pipeline {
                 checkout scm
             }
         }
-        sonarScanPipeline(getSonarParameters(params)).call()
+        stage('Build and SonarQube Scan') {
+            steps {
+              script {
+                sonarScanPipeline(getSonarParameters(params)).call()
+              }
+            }
+        }
     }
 }
